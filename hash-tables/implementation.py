@@ -2,11 +2,23 @@ from typing import Any
 
 
 class HashMap:
+    """ Hashmap implementation
+    search O(1)
+    insert O(1)
+    lookup O(1)
+    delete O(1)
+    """
+
     def __init__(self, size):
         self.size = size
         self.map = [None] * self.size
 
     def _get_hash(self, key: str) -> int:
+        """
+        Args:
+            key: hash key
+        Returns: hashed key
+        """
         hash_key = 0
 
         for char in key:
@@ -15,6 +27,11 @@ class HashMap:
         return hash_key % self.size
 
     def set(self, key: str, value: Any):
+        """
+        Args:
+            key: str
+            value: Any
+        """
         hash_key = self._get_hash(key)
 
         if not self.map[hash_key]:
@@ -24,13 +41,16 @@ class HashMap:
             for pair in self.map[hash_key]:
                 if pair[0] == key:
                     pair[1] = value
-
                     return True
-
             self.map[hash_key].append([key, value])
         return None
 
     def get(self, key: str) -> Any:
+        """
+        Args:
+            key:
+        Returns:
+        """
         hash_key = self._get_hash(key)
 
         if self.map[hash_key]:
@@ -41,6 +61,10 @@ class HashMap:
         return None
 
     def delete(self, key: str):
+        """
+        Args:
+            key:
+        """
         hash_key = self._get_hash(key)
         item = self.map[hash_key]
 
@@ -51,10 +75,14 @@ class HashMap:
                     # item.pop(i)
 
     def keys(self):
+        """
+        Returns:
+        """
         keys = []
 
         for item in self.map:
             if item is not None:
+                # solving the collision
                 if len(item) > 1:
                     for i in item:
                         keys.append(i[0])
